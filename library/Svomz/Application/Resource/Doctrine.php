@@ -15,7 +15,7 @@ class Svomz_Application_Resource_Doctrine
     /**
      * Initializes Doctrine Context.
      *
-     * @return Core\Application\Container\DoctrineContainer
+     * @return Svomz\Application\Container\DoctrineContainer
      */
     public function init()
     {
@@ -27,8 +27,8 @@ class Svomz_Application_Resource_Doctrine
         // Starting Doctrine container
         $container = new DoctrineContainer($config);
 
-        // Add to Zend Registry
-        \Zend_Registry::set('doctrine', $container);
+        // Record the service
+        $this->recordService($container, $config);
 
         return $container;
     }
@@ -54,5 +54,22 @@ class Svomz_Application_Resource_Doctrine
 
         $doctrineAutoloader = new \Doctrine\Common\ClassLoader('Doctrine');
         $autoloader->pushAutoloader(array($doctrineAutoloader, 'loadClass'), 'Doctrine');
+    }
+    /**
+     * Save the service in the container
+     *
+     * The service name can be configured with serviceName directive
+     * in the configuration file
+     * @param Svomz\Application\Container\DoctrineContainer $container
+     */
+    private function recordService($container, $config)
+    {
+        $serviceName = isset($config['serviceName'])
+                                        ? $config['serviceName'] : 'doctrine';
+
+        $this->getBootstrap()
+                ->getContainer()
+                ->setService($serviceName, $container);
+
     }
 }
