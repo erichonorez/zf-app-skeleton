@@ -1,1 +1,3 @@
-./library/*
+./library/Doctrine/*
+./library/Symfony/*
+./library/Zend/*
