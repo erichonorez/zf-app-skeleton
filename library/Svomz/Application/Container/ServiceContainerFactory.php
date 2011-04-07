@@ -39,6 +39,7 @@ class ServiceContainerFactory
      * @param  string $file
      * @return void
      * @throws Svomz\Application\Exception\FileTypeNotSupportedException
+     * @todo load the section of the configuration relative to the APPLICATION_ENV
      */
     protected static function _loadConfigFile($file)
     {
